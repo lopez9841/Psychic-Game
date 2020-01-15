@@ -7,26 +7,71 @@
     </head>
 
     <body>
-    
+    <h1>The Psychic Game</h1>
+    <p>Guess what letter I am thinking of</p>
+    <p>Wins: <span id="Wins">0</span></p>
+    <p>Losses: <span id="Losses">0</span></p>
+    <p>Guesses Left: <span id="GuessesLeft">10</span></p>
+    <p>Your Guesses so far: <span id="UserGuess"></span></p>
+
     <script type="text/javascript">
-        
-        //Here I declare my variables
-        var txt = "The Psychic Game";
-        txt = txt.fontsize("5").bold();
-        var userguess = event.key;
-        
+
         //creates array that list all options(The Alphabet)
         var computerChoices = ["a", "b", "c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","u","v","w","x","y","z"];
+        
+        // Creating variables to hold the number of wins, losses, and  
+        var Wins = 0;
+        var Losses = 0;
+        var GuessesLeft = 10;
+        var userGuessArr = [];
 
-        //writes out txt on webpage specifically for javascript
-        document.write (txt);
-
+        //Create Variables that hold references to the places in the HTML where we want to display things
+        var WinsText = document.getElementById("Wins");
+        var LossesText = document.getElementById("Losses");
+        var GuessesLeftText = document.getElementById("GuessesLeft");
+        
         // This function is run whenever the user presses a key.
-        document.onkeyup = function(event) {
+        document.onkeyup = function(event) { 
+       
+        //Here I declare my variables
+        var userGuess = event.key; //a
+        
+        // Randomly chooses a choice from the options array. This is the Computer's guess.
+      var computerGuess = computerChoices[Math.floor(Math.random() * computerChoices.length)]; //h
+
+      if(userGuess===computerGuess){ //if(a===h)
+          Wins++;
+          WinsText.innerHTML = Wins;
+          reset();
+      }
+      else{
+          if(GuessesLeft===0){
+              Losses++;
+              LossesText.innerHTML = Losses;
+              reset();
+          }
+        else{
+              GuessesLeft = GuessesLeft - 1; //GuessesLeft--;
+              GuessesLeftText.innerHTML = GuessesLeft;
+              userGuessArr.push(userGuess);
+              document.getElementById("UserGuess").innerHTML = userGuessArr.join(", ");
+          }
+      }
+        }
+
+        function reset()
+        {
+            userGuess = "";
+            GuessesLeft = 10;
+            userGuessArr = [];
+            computerGuess = computerChoices[Math.floor(Math.random() * computerChoices.length)];
+            GuessesLeftText.innerHTML = GuessesLeft;
+            document.getElementById("UserGuess").innerHTML = userGuessArr.join(", ");
+        }
 
     </script>
-
-    <p>Guess what letter I am thinking of</p>
+    </body>
+    </html>
 
 
 
